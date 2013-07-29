@@ -1,7 +1,5 @@
-# Generator-xframework
-[![Build Status](https://secure.travis-ci.org/someuser/generator-xframework.png?branch=master)](https://travis-ci.org/someuser/generator-xframework)
+# Yeoman Generator for X-Framework
 
-A generator for Yeoman.
 
 ## Getting started
 - Make sure you have [yo](https://github.com/yeoman/yo) installed:

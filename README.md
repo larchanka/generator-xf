@@ -1,4 +1,4 @@
-# Yeoman Generator for X-Framework
+# Yeoman Generator for [X-Framework](https://github.com/epam/x-framework)
 
 
 ## Getting started

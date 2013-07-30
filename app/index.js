@@ -47,6 +47,8 @@ XframeworkGenerator.prototype.xfmove = function xfmove() {
         action = this.args[0];
     }
 
+    console.log('Start ' + action);
+
     if (this.args[1]) {
         modules = this.args[1];
     }

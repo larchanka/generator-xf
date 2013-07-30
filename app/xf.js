@@ -36,23 +36,29 @@ var XF = module.exports = {
     },
 
     runUpdate : function(evnts) {
-        exec('cp -r ./x-framework/* ./', {maxBuffer: 10000 * 1024}, function (cpmsg) {
+        var updEl = evnts.args[1] || 'all',
+            exStr = 'cp -r ./x-framework/js/* ./js/ & cp -r ./x-framework/styles/xf.*.*ss ./styles/';
+
+        if (updEl === 'js') {
+            exStr = 'cp -r ./x-framework/js/* ./js/';
+        } else if (updEl === 'css') {
+            exStr = 'cp -r ./x-framework/styles/xf.*.*ss ./styles/';
+        }
+        exec(exStr, {maxBuffer: 10000 * 1024}, function (cpmsg) {
 
             if (cpmsg === null) {
 
-                exec('mkdir ./js/lib & rm -r ./x-framework', {maxBuffer: 10000 * 1024}, function (rmmsg) {
+                exec('rm -r ./x-framework', {maxBuffer: 10000 * 1024}, function (rmmsg) {
 
                     if (rmmsg === null) {
 
-                        var checkLibs = setInterval(function() {
-
-                            fs.exists('js/lib', function (exists) {
-                                if (exists) {
-                                    clearInterval(checkLibs);
-                                    XF.moveLibs(evnts);
-                                }
-                            });
-                        }, 2000);
+                        if (updEl === 'all' || updEl === 'js') {
+                            XF.moveLibs(evnts);
+                        } else {
+                            exec('rm -r ./jquery '
+                             + '& rm -r ./backbone '
+                             + '& rm -r ./underscore ', {maxBuffer: 10000 * 1024}, function () { });
+                        }
                     } else {
                         console.log(rmmsg);
                     }

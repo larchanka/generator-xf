@@ -123,7 +123,7 @@ var XF = module.exports = {
     startGrunt : function(evnts) {
         var custombuild = '';
 
-        if (evnts.args[1]) {
+        if (evnts.args[1] && evnts.args[1] !== 'all') {
             custombuild = ':' + evnts.args[1];
         }
         exec('grunt build' + custombuild, {maxBuffer: 10000 * 1024}, function (grmsg) {

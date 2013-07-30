@@ -4,7 +4,8 @@ var util = require('util'),
     yeoman = require('yeoman-generator'),
     bower = require('bower'),
     fs = require('fs'),
-    exec = require('child_process').exec;
+    exec = require('child_process').exec,
+    XF = require('./xf.js');
 
 var XframeworkGenerator = module.exports = function XframeworkGenerator(args, options, config) {
   "use strict";
@@ -25,22 +26,30 @@ util.inherits(XframeworkGenerator, yeoman.generators.Base);
 XframeworkGenerator.prototype.xfclone = function xfclone() {
     this.template('bowerrc', '.bowerrc');
     this.template('_bower.json', 'bower.json');
+    this.template('_package.json', 'package.json');
 };
 
 XframeworkGenerator.prototype.xfmove = function xfmove() {
+    var action = 'build',
+        modules = '';
     var _self = this,
         dirs = [
             'x-framework',
-            'x-framework/data',
-            'x-framework/img',
             'x-framework/js',
-            'x-framework/mocks',
             'jquery',
             'backbone',
             'underscore'
         ],
         totalDirs = dirs.length,
         uploadedDirs = 0;
+
+    if (this.args[0]) {
+        action = this.args[0];
+    }
+
+    if (this.args[1]) {
+        modules = this.args[1];
+    }
 
     var checkXframework = setInterval(function () {
 
@@ -52,70 +61,22 @@ XframeworkGenerator.prototype.xfmove = function xfmove() {
         });
 
         if (uploadedDirs >= totalDirs) {
-
             clearInterval(checkXframework);
-            console.log('\n\u001b[34mX-Framework downloaded and installed. \n\u001b[0mCopying to proper directories.');
-            runCopy(_self);
+
+            switch (action) {
+                case 'build' :
+                    XF.runBuild(_self);
+                    break;
+
+                case 'update' :
+                    XF.runUpdate(_self);
+                    break;
+
+                // default not defined
+            }
         } else {
             uploadedDirs = 0;
         }
     }, 2000);
 };
 
-var runCopy = (function(evnts) {
-    exec('cp -r ./x-framework/* ./', {maxBuffer: 10000 * 1024}, function (cpmsg) {
-
-        if (cpmsg === null) {
-
-            exec('rm -r ./x-framework', {maxBuffer: 10000 * 1024}, function (rmmsg) {
-
-                if (rmmsg === null) {
-
-                    var checkLibs = setInterval(function() {
-
-                        fs.exists('js/lib', function (exists) {
-                            if (exists) {
-                                clearInterval(checkLibs);
-                                moveLibs();
-                            }
-                        });
-                    }, 2000);
-                } else {
-                    console.log(rmmsg);
-                }
-            });
-        } else {
-            console.log(cpmsg);
-        }
-    });
-});
-
-var moveLibs = (function() {
-    console.log('Moving libs.');
-    exec('cp -r ./jquery/index.js ./js/lib/jquery.js '
-         + '& cp -r ./backbone/index.js ./js/lib/backbone.js '
-         + '& cp -r ./underscore/index.js ./js/lib/underscore.js ', {maxBuffer: 10000 * 1024}, function (mvmsg) {
-
-        if (mvmsg === null) {
-            console.log(':) \u001b[31mAll moved.');
-            exec('rm -r ./jquery '
-                 + '& rm -r ./backbone '
-                 + '& rm -r ./underscore ', {maxBuffer: 10000 * 1024}, function (rmmsg) {
-
-                if (rmmsg === null) {
-
-                    exec('grunt', {maxBuffer: 10000 * 1024}, function (grmsg) {
-
-                        if (grmsg !== null) {
-                            console.log(grmsg);
-                        }
-                    });
-                } else {
-                    console.log(rmmsg);
-                }
-            });
-        } else {
-            console.log(mvmsg);
-        }
-    });
-});

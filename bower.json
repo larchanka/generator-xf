@@ -1,5 +1,5 @@
 {
-    "name": "Bower pkg",
+    "name": "Bower pkg for X-Framework",
     "version": "0.1.0",
     "dependencies": {
         "x-framework" : "https://github.com/epam/x-framework.git"

@@ -7,16 +7,34 @@ var util = require('util'),
     exec = require('child_process').exec;
 
 var XF = module.exports = {
-    runBuild : function(evnts) {
-        exec('cp -r ./x-framework/* ./', {maxBuffer: 10000 * 1024}, function (cpmsg) {
+
+    // Default method. Makes copy of XF repository and main libraries
+    runGet: function (evnts) {
+        exec('cp -r ./x-framework/* ./', {
+            maxBuffer: 10000 * 1024
+        }, function (cpmsg) {
 
             if (cpmsg === null) {
+                fs.exists('js/lib', function (exists) {
+                    if (!exists) {
+                        exec('mkdir js/lib', {
+                            maxBuffer: 10000 * 1024
+                        }, function (mkmsg) {
 
-                exec('mkdir ./js/lib & rm -r ./x-framework', {maxBuffer: 10000 * 1024}, function (rmmsg) {
+                            if (mkmsg !== null) {
+                                console.log(mkmsg);
+                            }
+                        });
+                    }
+                });
+
+                exec('rm -r ./x-framework', {
+                    maxBuffer: 10000 * 1024
+                }, function (rmmsg) {
 
                     if (rmmsg === null) {
 
-                        var checkLibs = setInterval(function() {
+                        var checkLibs = setInterval(function () {
 
                             fs.exists('js/lib', function (exists) {
                                 if (exists) {
@@ -35,30 +53,51 @@ var XF = module.exports = {
         });
     },
 
-    runUpdate : function(evnts) {
-        var updEl = evnts.args[1] || 'all',
-            exStr = 'cp -r ./x-framework/js/* ./js/ & cp -r ./x-framework/styles/xf.*.*ss ./styles/';
+    // Run Grunt to build xf.js and xf.min.js
+    runBuild: function (evnts) {
+        exec('rm -r ./jquery ' + '& rm -r ./backbone ' + '& rm -r ./underscore & rm -r ./x-framework', {
+            maxBuffer: 10000 * 1024
+        }, function () {
+
+            XF.startGrunt(evnts);
+        });
+    },
+
+    // Run update of css/less and js files. Can be executed with attributes: js|css|all
+    runUpdate: function (evnts) {
+        var updEl = evnts.args[0] || 'all',
+            exStr = 'cp -r ./x-framework/js/* ./js/ & cp -r ./x-framework/styles/xf.*.*ss ./styles/' + ' & cp -r ./x-framework/Gruntfile.js ./Gruntfile.js';
 
         if (updEl === 'js') {
-            exStr = 'cp -r ./x-framework/js/* ./js/';
+            exStr = 'cp -r ./x-framework/js/* ./js/ & cp -r ./x-framework/Gruntfile.js ./Gruntfile.js';
         } else if (updEl === 'css') {
             exStr = 'cp -r ./x-framework/styles/xf.*.*ss ./styles/';
         }
-        exec(exStr, {maxBuffer: 10000 * 1024}, function (cpmsg) {
+
+        exec(exStr, {
+            maxBuffer: 10000 * 1024
+        }, function (cpmsg) {
 
             if (cpmsg === null) {
 
-                exec('rm -r ./x-framework', {maxBuffer: 10000 * 1024}, function (rmmsg) {
+                exec('rm -r ./x-framework', {
+                    maxBuffer: 10000 * 1024
+                }, function (rmmsg) {
 
                     if (rmmsg === null) {
 
                         if (updEl === 'all' || updEl === 'js') {
                             XF.moveLibs(evnts);
                         } else {
-                            exec('rm -r ./jquery '
-                             + '& rm -r ./backbone '
-                             + '& rm -r ./underscore ', {maxBuffer: 10000 * 1024}, function () { });
+                            exec('rm -r ./jquery ' + '& rm -r ./backbone ' + '& rm -r ./underscore ', {
+                                maxBuffer: 10000 * 1024
+                            }, function () {
+
+                                XF.runBuild(evnts);
+                            });
                         }
+
+                        console.log('\nUpdating sources\n\n');
                     } else {
                         console.log(rmmsg);
                     }
@@ -69,7 +108,8 @@ var XF = module.exports = {
         });
     },
 
-    moveLibs : function(evnts) {
+    // Move thirdparty libs to ./js/lib directory
+    moveLibs: function (evnts) {
 
         var uploadedDirs = 0,
             dirs = [
@@ -81,33 +121,35 @@ var XF = module.exports = {
             ],
             totalDirs = dirs.length;
 
-        exec('cp -r ./jquery/index.js ./js/lib/jquery.js '
-             + '& cp -r ./backbone/index.js ./js/lib/backbone.js '
-             + '& cp -r ./underscore/index.js ./js/lib/underscore.js ', {maxBuffer: 10000 * 1024}, function (mvmsg) {
+        exec('cp -r ./jquery/index.js ./js/lib/jquery.js ' + '& cp -r ./backbone/index.js ./js/lib/backbone.js ' + '& cp -r ./underscore/index.js ./js/lib/underscore.js ', {
+            maxBuffer: 10000 * 1024
+        }, function (mvmsg) {
 
             if (mvmsg === null) {
-                exec('rm -r ./jquery '
-                     + '& rm -r ./backbone '
-                     + '& rm -r ./underscore ', {maxBuffer: 10000 * 1024}, function (rmmsg) {
+                exec('rm -r ./jquery ' + '& rm -r ./backbone ' + '& rm -r ./underscore ', {
+                    maxBuffer: 10000 * 1024
+                }, function (rmmsg) {
 
                     if (rmmsg === null) {
-                        exec('npm install', {maxBuffer: 10000 * 1024}, function (npmmsg) {
+                        exec('npm install', {
+                            maxBuffer: 10000 * 1024
+                        }, function (npmmsg) {
 
-                            var checkGrunt = setInterval(function() {
-                                 dirs.map(function (dir) {
+                            var checkGrunt = setInterval(function () {
+                                dirs.map(function (dir) {
 
                                     fs.exists(dir, function (exists) {
                                         uploadedDirs = (exists) ? uploadedDirs + 1 : uploadedDirs;
                                     });
-                                 });
+                                });
 
-                                 if (uploadedDirs >= totalDirs) {
+                                if (uploadedDirs >= totalDirs) {
 
                                     clearInterval(checkGrunt);
                                     XF.startGrunt(evnts);
-                                 } else {
+                                } else {
                                     uploadedDirs = 0;
-                                 }
+                                }
                             }, 2000);
                         });
                     } else {
@@ -120,17 +162,24 @@ var XF = module.exports = {
         });
     },
 
-    startGrunt : function(evnts) {
+    // Start Grunt tasks with attributes
+    startGrunt: function (evnts) {
         var custombuild = '';
 
-        if (evnts.args[1] && evnts.args[1] !== 'all') {
-            custombuild = ':' + evnts.args[1];
+        console.log('\nBuilding xf.js and xf.min.js\t\n\n\n\n');
+
+        if (evnts.args[0] && evnts.args[0] !== 'all') {
+            custombuild = ':' + evnts.args[0];
         }
-        exec('grunt build' + custombuild, {maxBuffer: 10000 * 1024}, function (grmsg) {
+        exec('clear & rm -r ./js/xf*.js & grunt build' + custombuild, {
+            maxBuffer: 10000 * 1024
+        }, function (grmsg) {
 
             if (grmsg !== null) {
                 console.log(grmsg.toString());
-                XF.startGrunt(modules);
+                XF.startGrunt(evnts);
+            } else {
+                console.log('Build successful!');
             }
         });
     }

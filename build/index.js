@@ -16,7 +16,7 @@ var BuildGenerator = module.exports = function BuildGenerator(args, options, con
     yeoman.generators.NamedBase.apply(this, arguments);
 };
 
-util.inherits(BuildGenerator, yeoman.generators.NamedBase);
+util.inherits(BuildGenerator, yeoman.generators.Base);
 
 BuildGenerator.prototype.build = function build() {
 

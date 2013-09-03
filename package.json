@@ -1,6 +1,6 @@
 {
   "name": "generator-xf",
-  "version": "0.0.9",
+  "version": "0.0.95",
   "description": "Yeoman generator for X-Framework",
   "keywords": [
     "yeoman-generator",
@@ -23,11 +23,11 @@
     "test": "mocha"
   },
   "dependencies": {
-    "yeoman-generator": "~0.12.0",
+    "yeoman-generator": "~0.13.3",
     "bower": "latest"
   },
   "devDependencies": {
-    "mocha": "~1.10.0",
+    "mocha": "~1.12.0",
     "bower": "latest",
     "grunt" : "latest"
   },

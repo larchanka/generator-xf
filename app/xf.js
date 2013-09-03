@@ -1,4 +1,3 @@
-'use strict';
 var util = require('util'),
     path = require('path'),
     yeoman = require('yeoman-generator'),
@@ -10,6 +9,9 @@ var XF = module.exports = {
 
     // Default method. Makes copy of XF repository and main libraries
     runGet: function (evnts) {
+
+        console.log('\033[2J');
+
         exec('cp -r ./x-framework/* ./', {
             maxBuffer: 10000 * 1024
         }, function (cpmsg) {
@@ -55,6 +57,9 @@ var XF = module.exports = {
 
     // Run Grunt to build xf.js and xf.min.js
     runBuild: function (evnts) {
+
+        console.log('\033[2J');
+
         exec('rm -r ./jquery ' + '& rm -r ./backbone ' + '& rm -r ./underscore & rm -r ./x-framework', {
             maxBuffer: 10000 * 1024
         }, function () {
@@ -65,6 +70,9 @@ var XF = module.exports = {
 
     // Run update of css/less and js files. Can be executed with attributes: js|css|all
     runUpdate: function (evnts) {
+
+        console.log('\033[2J');
+
         var updEl = evnts.args[0] || 'all',
             exStr = 'cp -r ./x-framework/js/* ./js/ & cp -r ./x-framework/styles/xf.*.*ss ./styles/' + ' & cp -r ./x-framework/Gruntfile.js ./Gruntfile.js';
 
@@ -166,12 +174,12 @@ var XF = module.exports = {
     startGrunt: function (evnts) {
         var custombuild = '';
 
-        console.log('\nBuilding xf.js and xf.min.js\t\n\n\n\n');
+        console.log('\nBuilding xf.js and xf.min.js.\t\nCompressing less.\n');
 
         if (evnts.args[0] && evnts.args[0] !== 'all') {
             custombuild = ':' + evnts.args[0];
         }
-        exec('clear & rm -r ./js/xf*.js & grunt build' + custombuild, {
+        exec('grunt build' + custombuild, {
             maxBuffer: 10000 * 1024
         }, function (grmsg) {
 
@@ -179,7 +187,7 @@ var XF = module.exports = {
                 console.log(grmsg.toString());
                 XF.startGrunt(evnts);
             } else {
-                console.log('Build successful!');
+                console.log('Build successful!\n\n');
             }
         });
     }

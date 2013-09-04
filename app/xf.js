@@ -7,6 +7,9 @@ var util = require('util'),
 
 var XF = module.exports = {
 
+    attempts: 10,
+    curAttempt: 0,
+
     // Default method. Makes copy of XF repository and main libraries
     runGet: function (evnts) {
 
@@ -59,6 +62,8 @@ var XF = module.exports = {
     runBuild: function (evnts) {
 
         console.log('\033[2J');
+
+        console.log('\nBuilding xf.js and xf.min.js.\t\nCompressing less.\n');
 
         exec('rm -r ./jquery ' + '& rm -r ./backbone ' + '& rm -r ./underscore & rm -r ./x-framework', {
             maxBuffer: 10000 * 1024
@@ -172,9 +177,8 @@ var XF = module.exports = {
 
     // Start Grunt tasks with attributes
     startGrunt: function (evnts) {
-        var custombuild = '';
-
-        console.log('\nBuilding xf.js and xf.min.js.\t\nCompressing less.\n');
+        var custombuild = '',
+            _self = this;
 
         if (evnts.args[0] && evnts.args[0] !== 'all') {
             custombuild = ':' + evnts.args[0];
@@ -184,10 +188,17 @@ var XF = module.exports = {
         }, function (grmsg) {
 
             if (grmsg !== null) {
-                console.log(grmsg.toString());
-                XF.startGrunt(evnts);
+
+                if (_self.curAttempt < _self.attempts) {
+                    XF.startGrunt(evnts);
+                    _self.curAttempt = _self.curAttempt + 1;
+                } else {
+                    console.log('\x1b[0m\033[31mBuild failed!\n' + grmsg.toString() + '\n\n');
+                    _self.curAttempt = 0;
+                }
             } else {
-                console.log('Build successful!\n\n');
+//                console.log('\nBuilding xf.js and xf.min.js.\t\nCompressing less.\n');
+                console.log('\x1b[0m\033[31mBuild successful!\n\n');
             }
         });
     }

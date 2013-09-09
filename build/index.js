@@ -1,4 +1,3 @@
-'use strict';
 var util = require('util'),
     path = require('path'),
     yeoman = require('yeoman-generator'),
@@ -19,6 +18,10 @@ var BuildGenerator = module.exports = function BuildGenerator(args, options, con
 util.inherits(BuildGenerator, yeoman.generators.Base);
 
 BuildGenerator.prototype.build = function build() {
+
+    console.log('\033[2J');
+
+    XF.checkUpdate();
 
     this.copy('../../app/templates/_package.json', 'package.json');
 

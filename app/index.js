@@ -27,6 +27,9 @@ var XframeworkGenerator = module.exports = function XframeworkGenerator(args, op
 util.inherits(XframeworkGenerator, yeoman.generators.Base);
 
 XframeworkGenerator.prototype.xfmove = function xfmove() {
+
+    XF.checkUpdate();
+
     var _self = this;
     this.copy('_package.json', 'package.json');
     this.template('bowerrc', '.bowerrc');

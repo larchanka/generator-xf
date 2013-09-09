@@ -3,7 +3,8 @@ var util = require('util'),
     yeoman = require('yeoman-generator'),
     bower = require('bower'),
     fs = require('fs'),
-    exec = require('child_process').exec;
+    exec = require('child_process').exec,
+    updateNotifier = require('update-notifier');
 
 var XF = module.exports = {
 
@@ -61,8 +62,6 @@ var XF = module.exports = {
     // Run Grunt to build xf.js and xf.min.js
     runBuild: function (evnts) {
 
-        console.log('\033[2J');
-
         console.log('\nBuilding xf.js and xf.min.js.\t\nCompressing less.\n');
 
         exec('rm -r ./jquery ' + '& rm -r ./backbone ' + '& rm -r ./underscore & rm -r ./x-framework', {
@@ -75,8 +74,6 @@ var XF = module.exports = {
 
     // Run update of css/less and js files. Can be executed with attributes: js|css|all
     runUpdate: function (evnts) {
-
-        console.log('\033[2J');
 
         var updEl = evnts.args[0] || 'all',
             exStr = 'cp -r ./x-framework/js/* ./js/ & cp -r ./x-framework/styles/xf.*.*ss ./styles/' + ' & cp -r ./x-framework/Gruntfile.js ./Gruntfile.js';
@@ -201,5 +198,17 @@ var XF = module.exports = {
                 console.log('\x1b[0m\033[31mBuild successful!\n\n');
             }
         });
+    },
+
+    // Check generator's version
+    checkUpdate : function () {
+
+        var notifier = updateNotifier({
+            packagePath : '../package.json'
+        });
+
+        if (notifier.update) {
+            notifier.notify('\x1b[0m\033[32mUpdate available: ' + notifier.update.latest);
+        }
     }
 };

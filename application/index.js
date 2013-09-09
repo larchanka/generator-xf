@@ -4,7 +4,6 @@ var util = require('util'),
     yeoman = require('yeoman-generator'),
     fs = require('fs'),
     exec = require('child_process').exec,
-    walk = require('walk'),
     XF = require('../app/xf.js');
 
 var ApplicationGenerator = module.exports = function ApplicationGenerator(args, options, config) {
@@ -25,11 +24,12 @@ var ApplicationGenerator = module.exports = function ApplicationGenerator(args, 
 util.inherits(ApplicationGenerator, yeoman.generators.NamedBase);
 
 ApplicationGenerator.prototype.process = function update() {
+
+    XF.checkUpdate();
+
     this.event = this.args[0];
     this.appName = this.args[1];
-
     this.filesList = [];
-
     var today = new Date();
     this.today = today.getUTCMonth() + 1;
     this.today += '-' + today.getDate();
@@ -37,16 +37,13 @@ ApplicationGenerator.prototype.process = function update() {
     this.today += ' ' + today.getHours();
     this.today += ':' + today.getMinutes();
     this.today += ':' + today.getSeconds();
-
     this.copy('../../app/templates/_package.json', 'package.json');
     this.copy('../../app/templates/_bower.json', 'bower.json');
 
     if (this.event === 'init') {
 
         console.log('\nCreating templates for "' + this.appName + '"');
-
         var _self = this;
-
         this.imagesDir = fs.readdirSync('images');
         this.libDir = fs.readdirSync('js/lib');
         this.template('_index.html', '_index.html');
@@ -55,12 +52,11 @@ ApplicationGenerator.prototype.process = function update() {
     } else if (this.event === 'build') {
 
         console.log('\nBuilding your application.');
+        this.mkdir('production');
 
     } else {
+
         console.log('ERROR: "' + this.event + '" is not action.\n\nAvailable actions: \n* init\n* build\n\nCheck README for more information.\n\n');
+
     }
 };
-
-function doit(_self) {
-
-}

@@ -78,9 +78,9 @@ var XF = module.exports = {
         var updEl = evnts.args[0] || 'all',
             exStr = 'cp -r ./x-framework/js/* ./js/ & cp -r ./x-framework/styles/xf.*.*ss ./styles/' + ' & cp -r ./x-framework/Gruntfile.js ./Gruntfile.js';
 
-        if (updEl === 'js') {
+        if (updEl === 'scripts') {
             exStr = 'cp -r ./x-framework/js/* ./js/ & cp -r ./x-framework/Gruntfile.js ./Gruntfile.js';
-        } else if (updEl === 'css') {
+        } else if (updEl === 'styles') {
             exStr = 'cp -r ./x-framework/styles/xf.*.*ss ./styles/';
         }
 
@@ -96,7 +96,7 @@ var XF = module.exports = {
 
                     if (rmmsg === null) {
 
-                        if (updEl === 'all' || updEl === 'js') {
+                        if (updEl === 'all' || updEl === 'scripts') {
                             XF.moveLibs(evnts);
                         } else {
                             exec('rm -r ./jquery ' + '& rm -r ./backbone ' + '& rm -r ./underscore ', {

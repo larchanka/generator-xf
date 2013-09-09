@@ -14,8 +14,8 @@ XF generator has some subgenerators.
 ### Update
 Allows you to update sources and run [Build](#build). Can use parameters:
 - `yo xf:update [all]` — update less and js files of X-Framework, check latest versions of jQuery, Backbone, Underscore
-- `yo xf:update js` — update js files (inluding thirdparty libraries) of X-Framework, check latest versions of jQuery, Backbone, Underscore
-- `yo xf:update css` — update less files of X-Framework
+- `yo xf:update scripts` — update js files (inluding thirdparty libraries) of X-Framework, check latest versions of jQuery, Backbone, Underscore
+- `yo xf:update styles` — update less files of X-Framework
 
 ### Build
 Allows you to build xf.js and xf.min js. Can use parameters:

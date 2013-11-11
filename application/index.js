@@ -44,10 +44,12 @@ ApplicationGenerator.prototype.process = function update() {
 
         console.log('\nCreating templates for "' + this.appName + '"');
         var _self = this;
-        this.imagesDir = fs.readdirSync('images');
-        this.libDir = fs.readdirSync('js/lib');
-        this.template('_index.html', '_index.html');
-        this.template('_cache.manifest', 'cache.manifest');
+        
+        this.imagesDir = fs.existsSync('images') ? fs.readdirSync('images') : '';
+        this.libDir = fs.existsSync('js/lib') ? fs.readdirSync('js/lib') : '';
+            
+        this.template('../../app/templates/application/_index.html', 'index.html');
+        this.template('../../app/templates/application/_cache.manifest', 'cache.manifest');
 
     } else if (this.event === 'build') {
 

@@ -4,7 +4,8 @@ var util = require('util'),
     fs = require('fs'),
     exec = require('child_process').exec,
     XF = require('../app/xf.js'),
-    md = require("github-flavored-markdown").parse;
+    md = require("github-flavored-markdown").parse,
+    ent = require("entities").encode;
 
 var DocsGenerator = module.exports = function DocsGenerator(args, options, config) {
 
@@ -39,11 +40,11 @@ DocsGenerator.prototype.process = function create() {
     var docsDivRow = DOCFILE.split(splitReg);
     var docsDividers = DOCFILE.match(splitReg);
 
-    fs.writeFileSync('./mocks/menu.json', '{\n');
+    fs.writeFileSync('./mocks/menu.json', '[\n');
 
-    for (var i_ in docsDividers) {
+    for (var i = 0;i <= docsDividers.length; ++i) {
 
-        var i = parseFloat(i_);
+//        var i = parseFloat(i_);
 
         var docsRow = docsDivRow[i].split(splitReg_);
         var docsHeaders = docsDivRow[i].match(splitReg_);
@@ -52,18 +53,20 @@ DocsGenerator.prototype.process = function create() {
 
             var x = parseFloat(x_);
 
-            var text = md(docsHeaders[x] + docsRow[x+1]),
+            var nt = docsRow[x+1].replace(/```html([\w\s\d\W\S\D]*?)```/gim, replacer);
+
+            var text = md(docsHeaders[x] + nt),
                 fileName = docsHeaders[x].replace('## ', '')
                                         .replace(/[&\/\\,+()$~%.'":*?<>{}\s]/g, '_')
                                         .replace('_', '').toLowerCase();
 
             if (x === 0) {
-                var divName_ = docsDividers[i].replace('# ', '')
+                var divName_ = docsDividers[i-1].replace('\n# ', '')
                             .replace(/[&\/\\,+()$~%.'":*?<>{}\s]/g, '_')
                             .replace('_', '').toLowerCase(),
-                    divName = docsDividers[i].replace('\n# ', '');
+                    divName = docsDividers[i-1].replace('\n# ', '');
 
-                fs.appendFileSync('./mocks/menu.json', '"'+divName_+'": {\n\
+                fs.appendFileSync('./mocks/menu.json', '{\n\
                     "title": 	"'+divName+'",\n\
                     "url":		"'+fileName+'",\n\
                     "isHeader":	true\n\
@@ -72,20 +75,28 @@ DocsGenerator.prototype.process = function create() {
 
             var docName = docsHeaders[x].replace('\n## ', '');
 
-            fs.appendFileSync('./mocks/menu.json', '"'+fileName+'": {\n\
+            fs.appendFileSync('./mocks/menu.json', '{\n\
                 "title": 	"'+docName+'",\n\
                 "url":		"'+fileName+'"\n\
             }');
 
-            fs.appendFileSync('./mocks/menu.json', ',\n');
+            if (x == docsHeaders.length - 1 && i == docsDividers.length) {
+                fs.appendFileSync('./mocks/menu.json', '\n');
+            } else {
+                fs.appendFileSync('./mocks/menu.json', ',\n');
+            }
 
             fs.writeFile('./docs/' + fileName + '.html', text);
             console.log('\x1b[0m\033[32m* \033[39m\x1b[1mFile ./docs/' + fileName + '.html created');
         }
     }
 
-    fs.appendFileSync('./mocks/menu.json', '\n}');
+    fs.appendFileSync('./mocks/menu.json', '\n]');
 
     console.log('\nDone!\n');
 
+};
+
+var replacer = function (match, p1, p2, p3, offset, string){
+  return ent(match);
 };

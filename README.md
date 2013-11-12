@@ -1,6 +1,7 @@
 
 # [X-Framework](https://github.com/epam/x-framework) Generator
 
+![https://travis-ci.org/larchanka/generator-xf](https://api.travis-ci.org/larchanka/generator-xf.png)
 
 ## Getting started
 - Make sure you have [yeoman](https://github.com/yeoman/yo) installed:

@@ -9,7 +9,7 @@ var util = require('util'),
     bowerhook = require('./bowerhook.js');
 
 
-    console.log('WORKING >>>\n\n');
+    console.log('XF Generator starts >>>\n\n');
 
 var XframeworkGenerator = module.exports = function XframeworkGenerator(args, options, config) {
 

@@ -31,37 +31,6 @@ describe('XF generator', function () {
     });
   });
 
-  // it('should generate dotfiles', function (done) {
-//     xf.run({}, function () {
-//       helpers.assertFiles(['.bowerrc', '.gitignore', '.editorconfig']);
-//       done();
-//     });
-//   });
-// 
-//   it('downloads thirdparty libraries', function (done) {
-//     var expected = ['js/lib/backbone.js',
-//                     'js/lib/jquery.js',
-//                     'js/lib/underscore.js'
-//                     ];
-// 
-//     xf.run({}, function() {
-//       helpers.assertFiles(expected);
-//       done();
-//     });
-//   });
-// 
-//   it('creates styles and scripts', function (done) {
-//     var expected = ['styles/xf.css',
-//                     'styles/xf.min.css',,
-//                     'js/xf.js',
-//                     'js/xf.min.js'
-//                     ];
-//     xf.run([], function () {
-//       helpers.assertFiles(expected);
-//       done();
-//     });
-//   });
-
 
   function generatorTest(generatorType, specType, targetDirectory, scriptNameFn, specNameFn, suffix, done) {
     var xfGenerator;
@@ -104,7 +73,12 @@ describe('XF generator', function () {
         var xfApp = helpers.createGenerator('xf:application', deps, [name]);
         
         var expected = ['index.html',
-                        'cache.manifest'
+                        'cache.manifest',
+                        'images/thumbs.jpg',
+                        'styles/app.css',
+                        'js/app.js',
+                        'js/components/home.js',
+                        'tmpl/desktop/home.tpl'
         ];
         xfApp.run([], function() {
             helpers.assertFiles(expected);

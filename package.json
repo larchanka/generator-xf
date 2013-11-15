@@ -1,6 +1,6 @@
 {
     "name": "generator-xf",
-    "version": "0.1.72",
+    "version": "0.1.8",
     "description": "Yeoman generator for XFramework",
     "keywords": [
     "yeoman-generator",

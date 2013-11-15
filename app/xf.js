@@ -16,7 +16,7 @@ var XF = module.exports = {
 
         console.log('\033[2J');
 
-        exec('cp -r ./x-framework/* ./', {
+        exec('cp -r ./xframework/* ./', {
             maxBuffer: 10000 * 1024
         }, function (cpmsg) {
 
@@ -34,7 +34,7 @@ var XF = module.exports = {
                     }
                 });
 
-                exec('rm -r ./x-framework', {
+                exec('rm -r ./xframework', {
                     maxBuffer: 10000 * 1024
                 }, function (rmmsg) {
 
@@ -64,7 +64,7 @@ var XF = module.exports = {
 
         console.log('\nBuilding xf.js and xf.min.js.\t\nCompressing less.\n');
 
-        exec('rm -r ./jquery ' + '& rm -r ./backbone ' + '& rm -r ./underscore & rm -r ./x-framework', {
+        exec('rm -r ./jquery ' + '& rm -r ./backbone ' + '& rm -r ./underscore & rm -r ./xframework', {
             maxBuffer: 10000 * 1024
         }, function () {
 
@@ -76,12 +76,12 @@ var XF = module.exports = {
     runUpdate: function (evnts) {
 
         var updEl = evnts.args[0] || 'all',
-            exStr = 'cp -r ./x-framework/js/* ./js/ & cp -r ./x-framework/styles/xf.*.*ss ./styles/' + ' & cp -r ./x-framework/Gruntfile.js ./Gruntfile.js';
+            exStr = 'cp -r ./xframework/js/* ./js/ & cp -r ./xframework/styles/xf.*.*ss ./styles/' + ' & cp -r ./xframework/Gruntfile.js ./Gruntfile.js';
 
         if (updEl === 'scripts') {
-            exStr = 'cp -r ./x-framework/js/* ./js/ & cp -r ./x-framework/Gruntfile.js ./Gruntfile.js';
+            exStr = 'cp -r ./xframework/js/* ./js/ & cp -r ./xframework/Gruntfile.js ./Gruntfile.js';
         } else if (updEl === 'styles') {
-            exStr = 'cp -r ./x-framework/styles/xf.*.*ss ./styles/';
+            exStr = 'cp -r ./xframework/styles/xf.*.*ss ./styles/';
         }
 
         exec(exStr, {
@@ -90,7 +90,7 @@ var XF = module.exports = {
 
             if (cpmsg === null) {
 
-                exec('rm -r ./x-framework', {
+                exec('rm -r ./xframework', {
                     maxBuffer: 10000 * 1024
                 }, function (rmmsg) {
 

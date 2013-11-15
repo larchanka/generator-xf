@@ -11,8 +11,8 @@ var util = require('util'),
 var BH = module.exports = {
     modules : '',
     dirs : [
-            'x-framework',
-            'x-framework/js',
+            'xframework',
+            'xframework/js',
             'jquery',
             'backbone',
             'underscore'

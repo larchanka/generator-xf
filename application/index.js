@@ -44,11 +44,13 @@ ApplicationGenerator.prototype.process = function update() {
 
         console.log('\nCreating templates for "' + this.appName + '"');
         var _self = this;
-        
-        this.imagesDir = fs.existsSync('images') ? fs.readdirSync('images') : '';
-        this.libDir = fs.existsSync('js/lib') ? fs.readdirSync('js/lib') : '';
             
         this.template('../../app/templates/application/_index.html', 'index.html');
+        this.copy('../../app/templates/application/_images/thumbs.jpg', 'images/thumbs.jpg');
+        this.copy('../../app/templates/application/_js/app.js', 'js/app.js');
+        this.copy('../../app/templates/application/_js/components/home.js', 'js/components/home.js');
+        this.copy('../../app/templates/application/_styles/app.css', 'styles/app.css');
+        this.copy('../../app/templates/application/_tmpl/desktop/home.tmpl', 'tmpl/desktop/home.tmpl');
         this.template('../../app/templates/application/_cache.manifest', 'cache.manifest');
 
     } else if (this.event === 'build') {

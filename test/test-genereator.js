@@ -78,7 +78,7 @@ describe('XF generator', function () {
                         'styles/app.css',
                         'js/app.js',
                         'js/components/home.js',
-                        'tmpl/desktop/home.tpl'
+                        'tmpl/desktop/home.tmpl'
         ];
         xfApp.run([], function() {
             helpers.assertFiles(expected);

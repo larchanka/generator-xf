@@ -1,5 +1,8 @@
 {
     "name": "Bower pkg for XFramework",
-    "version": "0.1.2"
+    "version": "0.1.2",
+    "dependencies": {
+        "x-framework" : "git://github.com/epam/xframework.git"
+    }
 }
 

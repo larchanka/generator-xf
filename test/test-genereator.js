@@ -67,7 +67,7 @@ describe('XF generator', function () {
   });
   
   describe('Application', function () {
-    it('should generate a new Application', function (done) {
+    it('should generate a new \'Simple App\' Application', function (done) {
         var name = "init";
         var deps = [path.join('../../application')];
         var xfApp = helpers.createGenerator('xf:application', deps, [name]);

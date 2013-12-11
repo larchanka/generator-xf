@@ -54,9 +54,25 @@ ApplicationGenerator.prototype.process = function update() {
         this.template('../../app/templates/application/_cache.manifest', 'cache.manifest');
 
     } else if (this.event === 'build') {
+        
+        var _self = this;
 
         console.log('\nBuilding your application.');
-        this.mkdir('production');
+        
+        exec('rm -r ./prod', {
+            maxBuffer: 10000 * 1024
+        }, function (rmmsg) {
+
+            if (rmmsg === null) {
+
+                _self.mkdir('prod');
+                
+                
+                
+            } else {
+                console.log(rmmsg);
+            }
+        });
 
     } else {
 

@@ -1,5 +1,5 @@
 
-# [X-Framework](https://github.com/epam/x-framework) Generator
+# [XFramework](https://github.com/epam/xframework) Generator
 
 ![https://travis-ci.org/larchanka/generator-xf](https://api.travis-ci.org/larchanka/generator-xf.png)
 
@@ -20,10 +20,10 @@ Allows you to update sources and run [Build](#build). Can use parameters:
 
 ### Build
 Allows you to build xf.js and xf.min js. Can use parameters:
-- `yo xf:build` — create build with all [UI](https://github.com/epam/x-framework/tree/master/xf/ui) elements
+- `yo xf:build` — create build with all [UI](https://github.com/epam/xframework/tree/master/xf/ui) elements
 - `yo xf:build button:fieldset:...` — create build 'button' and 'fieldset' elements
 
-Full list of available elements can be found at [xf/ui](https://github.com/epam/x-framework/tree/master/xf/ui) directory of X-Framework.
+Full list of available elements can be found at [xf/ui](https://github.com/epam/xframework/tree/master/xf/ui) directory of X-Framework.
 
 ### Application
 Allows you to create boilerplate. Can use parameters:

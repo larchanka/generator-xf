@@ -16,7 +16,7 @@ var XF = module.exports = {
 
         console.log('\033[2J');
 
-        exec('cp -r ./xframework/* ./', {
+        exec('cp -r ./js/lib/xframework/* ./', {
             maxBuffer: 10000 * 1024
         }, function (cpmsg) {
 
@@ -34,7 +34,7 @@ var XF = module.exports = {
                     }
                 });
 
-                exec('rm -r ./xframework', {
+                exec('rm -r ./js/lib/xframework', {
                     maxBuffer: 10000 * 1024
                 }, function (rmmsg) {
 
@@ -64,7 +64,7 @@ var XF = module.exports = {
 
         console.log('\nBuilding xf.js and xf.min.js.\t\nCompressing less.\n');
 
-        exec('rm -r ./jquery ' + '& rm -r ./backbone ' + '& rm -r ./underscore & rm -r ./xframework', {
+        exec('rm -r ./js/lib/xframework', {
             maxBuffer: 10000 * 1024
         }, function () {
 
@@ -76,12 +76,12 @@ var XF = module.exports = {
     runUpdate: function (evnts) {
 
         var updEl = evnts.args[0] || 'all',
-            exStr = 'cp -r ./xframework/js/* ./js/ & cp -r ./xframework/styles/xf.*.*ss ./styles/' + ' & cp -r ./xframework/Gruntfile.js ./Gruntfile.js';
+            exStr = 'cp -r ./js/lib/xframework/js/* ./js/ & cp -r ./js/lib/xframework/styles/xf.*.*ss ./styles/' + ' & cp -r ./js/lib/xframework/Gruntfile.js ./Gruntfile.js';
 
         if (updEl === 'scripts') {
-            exStr = 'cp -r ./xframework/js/* ./js/ & cp -r ./xframework/Gruntfile.js ./Gruntfile.js';
+            exStr = 'cp -r ./js/lib/xframework/js/* ./js/ & cp -r ./js/lib/xframework/Gruntfile.js ./Gruntfile.js';
         } else if (updEl === 'styles') {
-            exStr = 'cp -r ./xframework/styles/xf.*.*ss ./styles/';
+            exStr = 'cp -r ./js/lib/xframework/styles/xf.*.*ss ./styles/';
         }
 
         exec(exStr, {
@@ -90,7 +90,7 @@ var XF = module.exports = {
 
             if (cpmsg === null) {
 
-                exec('rm -r ./xframework', {
+                exec('rm -r ./js/lib/xframework', {
                     maxBuffer: 10000 * 1024
                 }, function (rmmsg) {
 
@@ -99,12 +99,7 @@ var XF = module.exports = {
                         if (updEl === 'all' || updEl === 'scripts') {
                             XF.moveLibs(evnts);
                         } else {
-                            exec('rm -r ./jquery ' + '& rm -r ./backbone ' + '& rm -r ./underscore ', {
-                                maxBuffer: 10000 * 1024
-                            }, function () {
-
-                                XF.runBuild(evnts);
-                            });
+                            XF.runBuild(evnts);
                         }
 
                         console.log('\nUpdating sources\n\n');
@@ -131,16 +126,16 @@ var XF = module.exports = {
             ],
             totalDirs = dirs.length;
 
-        exec('cp -r ./jquery/index.js ./js/lib/jquery.js ' + '& cp -r ./backbone/index.js ./js/lib/backbone.js ' + '& cp -r ./underscore/index.js ./js/lib/underscore.js ', {
-            maxBuffer: 10000 * 1024
-        }, function (mvmsg) {
-
-            if (mvmsg === null) {
-                exec('rm -r ./jquery ' + '& rm -r ./backbone ' + '& rm -r ./underscore ', {
-                    maxBuffer: 10000 * 1024
-                }, function (rmmsg) {
-
-                    if (rmmsg === null) {
+        // exec('cp -r ./jquery/index.js ./js/lib/jquery.js ' + '& cp -r ./backbone/index.js ./js/lib/backbone.js ' + '& cp -r ./underscore/index.js ./js/lib/underscore.js ', {
+//             maxBuffer: 10000 * 1024
+//         }, function (mvmsg) {
+// 
+//             if (mvmsg === null) {
+//                 exec('rm -r ./jquery ' + '& rm -r ./backbone ' + '& rm -r ./underscore ', {
+//                     maxBuffer: 10000 * 1024
+//                 }, function (rmmsg) {
+// 
+//                     if (rmmsg === null) {
                         exec('npm install', {
                             maxBuffer: 10000 * 1024
                         }, function (npmmsg) {
@@ -161,15 +156,15 @@ var XF = module.exports = {
                                     uploadedDirs = 0;
                                 }
                             }, 2000);
-                        });
-                    } else {
-                        console.log(rmmsg);
-                    }
-                });
-            } else {
-                console.log(mvmsg);
-            }
-        });
+                        });        // 
+        //             } else {
+        //                 console.log(rmmsg);
+        //             }
+        //         });
+        //     } else {
+        //         console.log(mvmsg);
+        //     }
+        // });
     },
 
     // Start Grunt tasks with attributes
@@ -194,7 +189,6 @@ var XF = module.exports = {
                     _self.curAttempt = 0;
                 }
             } else {
-//                console.log('\nBuilding xf.js and xf.min.js.\t\nCompressing less.\n');
                 console.log('\x1b[0m\033[31mBuild successful!\n\n');
             }
         });

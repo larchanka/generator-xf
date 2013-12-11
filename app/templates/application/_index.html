@@ -4,14 +4,14 @@
     <title><%= appName %></title>
     <meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <link rel="stylesheet" href="styles/xf.min.css">
+    <link rel="stylesheet" href="../styles/xf.min.css">
     <link rel="stylesheet" href="styles/app.css">
 </head>
   
 <body>
     
     <!-- FIXED HEADER -->
-    <header data-role="header" data-fixed="true"><a href="javascript:history.back()" data-appearance="backbtn" data-role="button" data-position="left"></a><h1><%= appName %></h1></header>
+    <header data-role="header" data-fixed="true"><a href="javascript:history.back()" data-appearance="backbtn" class="hidden" data-role="button" data-position="left"></a><h1><%= appName %></h1></header>
     
     <!-- HOMEPAGE -->
     <div class="xf-page" id="home">
@@ -44,18 +44,10 @@
         </div>
         <a data-href="" data-role="button">Send</a>
     </div>
-    
-    <script type="text/javascript">
-    if (!window.console) {
-        window.console = {
-            log: function () {}
-        }
-    }
-    </script>
 </body>
-<script src="js/lib/jquery.js"></script>
-<script src="js/lib/underscore.js"></script>
-<script src="js/lib/backbone.js"></script>
-<script src="js/xf.min.js"></script>
+<script src="js/lib/jquery/jquery.js"></script>
+<script src="js/lib/underscore/underscore.js"></script>
+<script src="js/lib/backbone/backbone.js"></script>
+<script src="js/xf.js"></script>
 <script src="js/app.js"></script>
 </html>

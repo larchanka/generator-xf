@@ -6,6 +6,9 @@ var util = require('util'),
     XF = require('../app/xf.js'),
     md = require("github-flavored-markdown").parse,
     ent = require("entities").encode;
+    
+var mocksFile = './docs/mocks/menu.json',
+    indexFile = './docs/index.html';
 
 var DocsGenerator = module.exports = function DocsGenerator(args, options, config) {
 
@@ -40,11 +43,10 @@ DocsGenerator.prototype.process = function create() {
     var docsDivRow = DOCFILE.split(splitReg);
     var docsDividers = DOCFILE.match(splitReg);
 
-    fs.writeFileSync('./mocks/menu.json', '[\n');
+    fs.writeFileSync(mocksFile, '[\n');
+    fs.writeFileSync(indexFile, '<!doctype html><head><title>XFramework Docs</title></head><body><h1>XFramework</h1><ul>');
 
     for (var i = 0;i <= docsDividers.length; ++i) {
-
-//        var i = parseFloat(i_);
 
         var docsRow = docsDivRow[i].split(splitReg_);
         var docsHeaders = docsDivRow[i].match(splitReg_);
@@ -66,24 +68,28 @@ DocsGenerator.prototype.process = function create() {
                             .replace('_', '').toLowerCase(),
                     divName = docsDividers[i-1].replace('\n# ', '');
 
-                fs.appendFileSync('./mocks/menu.json', '{\n\
+                fs.appendFileSync(mocksFile, '{\n\
                     "title": 	"'+divName+'",\n\
                     "url":		"'+fileName+'",\n\
                     "isHeader":	true\n\
                 },\n');
+                
+                fs.appendFileSync(indexFile, '<li><a href="'+fileName+'.html"><strong>'+divName+'"</strong></a></li>');
             }
 
             var docName = docsHeaders[x].replace('\n## ', '');
 
-            fs.appendFileSync('./mocks/menu.json', '{\n\
+            fs.appendFileSync(mocksFile, '{\n\
                 "title": 	"'+docName+'",\n\
                 "url":		"'+fileName+'"\n\
             }');
+            
+            fs.appendFileSync(indexFile, '<li>&nbsp; &nbsp; <a href="'+fileName+'.html">'+docName+'"</a></li>');
 
             if (x == docsHeaders.length - 1 && i == docsDividers.length) {
-                fs.appendFileSync('./mocks/menu.json', '\n');
+                fs.appendFileSync(mocksFile, '\n');
             } else {
-                fs.appendFileSync('./mocks/menu.json', ',\n');
+                fs.appendFileSync(mocksFile, ',\n');
             }
 
             fs.writeFile('./docs/' + fileName + '.html', text);
@@ -91,7 +97,8 @@ DocsGenerator.prototype.process = function create() {
         }
     }
 
-    fs.appendFileSync('./mocks/menu.json', '\n]');
+    fs.appendFileSync(mocksFile, '\n]');
+    fs.appendFileSync(indexFile, '</ul></body></html>');
 
     console.log('\nDone!\n');
 

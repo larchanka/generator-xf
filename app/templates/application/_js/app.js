@@ -1,86 +1,66 @@
-$(function () {
-    var App = new XF.App({
+XF.define(function () {
+    return new XF.App({
         initialize: function() {
+
         },
 
         settings: {
-            applicationVersion: '1.1' + Math.random(),
+            appVersion: '1.0',
             noCache: true,
-            componentUrlPrefix: 'js/components/',
-            templateUrlPrefix: 'tmpl/',
             dataUrlPrefix: 'mocks/'
-
         },
 
         animations: {
-        default: ''
-    },
+            standardAnimation: 'slideleft'
+        },
 
-    device: {
-        types: [
-        
-        //Settings for mobile devices
-        // {
-            //     name: 'mobile',
-            //     range: {
-                //         max: 568,
-                //         min: null
-                //     },
-                //     templatePath: 'mobile/',
-                //     fallBackTo: 'default',
-                //     defaultAnimation: 'default'
-                // }, 
-        
-        
-                //Settings for tablet devices
-                // {
-                    //     name: 'tablet',
-                    //     range: {
-                        //         max: 1024,
-                        //         min: 569
-                        //     },
-                        //     templatePath: 'tablet/',
-                        //     fallBackTo: 'default',
-                        //     defaultAnimation: 'default'
-                        // }, 
-                        {
-                            name: 'desktop',
-                            range: {
-                                max: null,
-                                min: null
-                            },
-                            templatePath: 'desktop/',
-                            defaultAnimation: 'fade'
-                        }
-                        ]
+        device: {
+            types: [
+                {
+                    name: 'desktop',
+                    range: {
+                        max: null,
+                        min: 1025
                     },
+                    templatePath: 'desktop/',
+                    defaultAnimation: 'fade'
+                },
+                {
+                    name: 'mobile',
+                    range: {
+                        max: 1024,
+                        min: null
+                    },
+                    templatePath: 'mobile/'
+                }
+            ]
+        },
 
-                    router: {
-                        routes: {
-                            '': 'home',
-                            '/': 'home',
-                            'about': 'about',
-                            'information': 'information',
-                            'contacts': 'contacts'
-                        },
+        router: {
+            routes: {
+                '': 'home',
+                '/': 'home',
+                'about': 'about',
+                'information': 'information',
+                'contacts': 'contacts'
+            },
 
-                        home: function() {
-                            $('.xf-header > a').addClass('hidden');
-                        },
+            home: function() {
+                $('.xf-header > a').addClass('hidden');
+            },
 
-                        about: function(hash) {
-                            $('.xf-header > a').removeClass('hidden');
-                        },
-                        
-                        information: function(hash) {
-                            $('.xf-header > a').removeClass('hidden');
-                        },
-                        
-                        contacts: function(hash) {
-                            $('.xf-header > a').removeClass('hidden');
-                        }
-                    }
+            about: function(hash) {
+                $('.xf-header > a').removeClass('hidden');
+            },
+            
+            information: function(hash) {
+                $('.xf-header > a').removeClass('hidden');
+            },
+            
+            contacts: function(hash) {
+                $('.xf-header > a').removeClass('hidden');
+            }
+        }
 
-                });
-                
-            });
+    });
+});

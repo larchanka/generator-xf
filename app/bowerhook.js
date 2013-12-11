@@ -11,11 +11,11 @@ var util = require('util'),
 var BH = module.exports = {
     modules : '',
     dirs : [
-            'xframework',
-            'xframework/js',
-            'jquery',
-            'backbone',
-            'underscore'
+            'js/lib/xframework',
+            'js/lib/xframework/js',
+            'js/lib/jquery',
+            'js/lib/backbone',
+            'js/lib/underscore'
         ],
 
     checkDirs : function(callback) {

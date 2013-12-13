@@ -28,6 +28,7 @@ Full list of available elements can be found at [xf/ui](https://github.com/epam/
 ### Application
 Allows you to create boilerplate. Can use parameters:
 - `yo xf:application [init] [name]` — create simple boilerplate for your app, where 'name' is the name of the app
+- `yo xf:application build` — minify js, css, change paths at index.html, move neccessary files to `prod` directory
 
 ### Collection
 Allows you to create simple collection. Can use parameters:

@@ -73,7 +73,6 @@ describe('XF generator', function () {
         var xfApp = helpers.createGenerator('xf:application', deps, [name]);
         
         var expected = ['index.html',
-                        'cache.manifest',
                         'images/thumbs.jpg',
                         'styles/app.css',
                         'js/app.js',

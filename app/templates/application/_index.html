@@ -4,8 +4,10 @@
     <title><%= appName %></title>
     <meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <link rel="stylesheet" href="../styles/xf.min.css">
+    <!-- build:css styles/app.min.css -->
+    <link rel="stylesheet" href="styles/xf.min.css">
     <link rel="stylesheet" href="styles/app.css">
+    <!-- /build -->
 </head>
   
 <body>
@@ -45,9 +47,16 @@
         <a data-href="" data-role="button">Send</a>
     </div>
 </body>
+<!-- DO NOT REMOVE COMMENTS BELOW -->
+<!-- build:js js/lib.min.js -->
 <script src="js/lib/jquery/jquery.js"></script>
 <script src="js/lib/underscore/underscore.js"></script>
 <script src="js/lib/backbone/backbone.js"></script>
+<!-- /build -->
+<!-- build:js js/xf.min.js -->
 <script src="js/xf.js"></script>
+<!-- /build -->
+<!-- build:js js/app.min.js -->
 <script src="js/app.js"></script>
+<!-- /build -->
 </html>

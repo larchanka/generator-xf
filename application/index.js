@@ -1,10 +1,10 @@
 
 var util = require('util'),
-    path = require('path'),
-    yeoman = require('yeoman-generator'),
-    fs = require('fs'),
-    exec = require('child_process').exec,
-    XF = require('../app/xf.js');
+path = require('path'),
+yeoman = require('yeoman-generator'),
+fs = require('fs'),
+exec = require('child_process').exec,
+XF = require('../app/xf.js');
 
 var ApplicationGenerator = module.exports = function ApplicationGenerator(args, options, config) {
 
@@ -39,6 +39,36 @@ ApplicationGenerator.prototype.process = function update() {
     this.today += ':' + today.getSeconds();
     this.copy('../../app/templates/_package.json', 'package.json');
     this.copy('../../app/templates/_bower.json', 'bower.json');
+    
+    var doProd = function (_self) {
+        _self.mkdir('prod');
+        _self.mkdir('prod/images');
+        _self.mkdir('prod/tmpl');
+        _self.mkdir('prod/js');
+        _self.template('../../app/templates/application/_cache.manifest', 'cache.manifest');
+        
+        exec('cp -R images/ prod/images/ && cp -R tmpl/ prod/tmpl/ && cp js/xf.min.js prod/js/xf.min.js', {
+            maxBuffer: 10000 * 1024
+        }, function (rmmsg) {
+
+            if (rmmsg === null) {
+
+                exec('grunt appbuild', {
+                    maxBuffer: 10000 * 1024
+                }, function (rmmsg) {
+
+                    if (rmmsg === null) {
+                        console.log('Application build finished.')
+                    } else {
+                        console.log(rmmsg);
+                    }
+                });
+        
+            } else {
+                console.log(rmmsg);
+            }
+        });
+    };
 
     if (this.event === 'init') {
 
@@ -51,7 +81,6 @@ ApplicationGenerator.prototype.process = function update() {
         this.copy('../../app/templates/application/_js/components/home.js', 'js/components/home.js');
         this.copy('../../app/templates/application/_styles/app.css', 'styles/app.css');
         this.copy('../../app/templates/application/_tmpl/desktop/home.tmpl', 'tmpl/desktop/home.tmpl');
-        this.template('../../app/templates/application/_cache.manifest', 'cache.manifest');
 
     } else if (this.event === 'build') {
         
@@ -59,20 +88,24 @@ ApplicationGenerator.prototype.process = function update() {
 
         console.log('\nBuilding your application.');
         
-        exec('rm -r ./prod', {
-            maxBuffer: 10000 * 1024
-        }, function (rmmsg) {
+        fs.exists('./prod', function (exists) {
+            if (exists) {
+                exec('rm -r ./prod', {
+                    maxBuffer: 10000 * 1024
+                }, function (rmmsg) {
 
-            if (rmmsg === null) {
-
-                _self.mkdir('prod');
-                
-                
-                
+                    if (rmmsg === null) {
+                        doProd(_self);
+                    } else {
+                        console.log(rmmsg);
+                    }
+                });
             } else {
-                console.log(rmmsg);
+                doProd(_self);
             }
         });
+        
+        
 
     } else {
 

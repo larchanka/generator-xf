@@ -175,7 +175,7 @@ var XF = module.exports = {
         if (evnts.args[0] && evnts.args[0] !== 'all') {
             custombuild = ':' + evnts.args[0];
         }
-        exec('grunt build' + custombuild, {
+        exec('grunt', {//}' build' + custombuild, {
             maxBuffer: 10000 * 1024
         }, function (grmsg) {
 

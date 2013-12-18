@@ -48,3 +48,7 @@ Allows you to create simple model. Can use parameters:
 
 ## License
 [MIT License](http://en.wikipedia.org/wiki/MIT_License)
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/larchanka/generator-xf/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+

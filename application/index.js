@@ -47,7 +47,9 @@ ApplicationGenerator.prototype.process = function update() {
         _self.mkdir('prod/js');
         _self.template('../../app/templates/application/_cache.manifest', 'cache.manifest');
         
-        exec('cp -R images/ prod/images/ && cp -R tmpl/ prod/tmpl/ && cp js/xf.min.js prod/js/xf.min.js', {
+        var extStr = 'cp -r images/ prod/images/ && cp -r tmpl/ prod/tmpl/ && cp -r js/components/ prod/js/components/ && cp js/xf.min.js prod/js/xf.min.js';
+        
+        exec(extStr, {
             maxBuffer: 10000 * 1024
         }, function (rmmsg) {
 

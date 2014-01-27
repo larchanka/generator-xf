@@ -85,6 +85,7 @@ ApplicationGenerator.prototype.process = function update() {
         this.copy('../../app/templates/application/_js/components/home.js', 'js/components/home.js');
         this.copy('../../app/templates/application/_styles/app.css', 'styles/app.css');
         this.copy('../../app/templates/application/_tmpl/desktop/home.tmpl', 'tmpl/desktop/home.tmpl');
+        this.copy('../../app/templates/application/_tmpl/mobile/home.tmpl', 'tmpl/mobile/home.tmpl');
 
     } else if (this.event === 'build') {
         

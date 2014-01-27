@@ -4,6 +4,7 @@ var util = require('util'),
     yeoman = require('yeoman-generator'),
     bower = require('bower'),
     fs = require('fs'),
+    fse = require('fs-extra'),
     exec = require('child_process').exec,
     XF = require('./xf.js');
 

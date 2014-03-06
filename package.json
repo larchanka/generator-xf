@@ -1,9 +1,9 @@
 {
     "name": "generator-xf",
-    "version": "0.4.3",
+    "version": "0.4.6",
     "description": "Yeoman generator for XFramework",
     "keywords": [
-    "yeoman-generator",
+        "yeoman-generator",
         "x-framework",
         "framework"
     ],
@@ -24,12 +24,12 @@
     },
     "dependencies": {
         "yeoman-generator": "latest",
-        "fs-extra" : "latest",
+        "fs-extra": "latest",
         "update-notifier": "latest",
         "marked": "latest",
         "grunt": "latest",
         "underscore.string": "latest",
-        "entities" : "latest",
+        "entities": "latest",
         "github-flavored-markdown": "latest"
     },
     "peerDependencies": {
@@ -42,9 +42,7 @@
     "engines": {
         "node": ">=0.9.0"
     },
-    "licenses": [
-        {
-            "type": "MIT"
-        }
-    ]
+    "licenses": [{
+        "type": "MIT"
+    }]
 }

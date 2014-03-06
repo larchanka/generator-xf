@@ -1,9 +1,9 @@
 // COMPONENT: <%= component %>
 
-$(function(){
-	XF.defineComponent(
-		'<%= component %>',
-		XF.Component.extend({
+XF.define(
+    '<%= component %>', 
+    function () {
+        return XF.Component.extend({
 
             View : XF.View.extend({
                 useCache : false,
@@ -15,7 +15,6 @@ $(function(){
             Model : null,
             Collection: null
 
-        })
-	);
-
-});
+        });
+    }	
+);

@@ -49,25 +49,18 @@ ApplicationGenerator.prototype.process = function update() {
         _self.mkdir('prod/styles/fonts');
         _self.template('../../app/templates/application/_cache.manifest', 'cache.manifest');
         
-        var extStr = 'cp -r ./styles/fonts/* ./prod/styles/fonts/ & cp -r ./images/* ./prod/images/ & cp -r ./tmpl/* ./prod/tmpl/ & cp -r ./js/components/ ./prod/js/components/ & cp ./js/xf.min.js ./prod/js/xf.min.js';
-        
-        exec(extStr, {
+        fse.copySync('./styles/fonts/','./prod/styles/fonts/', function () {});
+        fse.copySync('./images/','./prod/images/', function () {});
+        fse.copySync('./tmpl/','./prod/tmpl/', function () {});
+        fse.copySync('./js/components/','./prod/js/components/', function () {});
+        fse.copySync('./js/xf.min.js','./prod/js/xf.min.js', function () {});
+
+        exec('grunt appbuild', {
             maxBuffer: 10000 * 1024
         }, function (rmmsg) {
 
             if (rmmsg === null) {
-
-                exec('grunt appbuild', {
-                    maxBuffer: 10000 * 1024
-                }, function (rmmsg) {
-
-                    if (rmmsg === null) {
-                        console.log('Application build finished.')
-                    } else {
-                        console.log(rmmsg);
-                    }
-                });
-        
+                console.log('Application build finished.')
             } else {
                 console.log(rmmsg);
             }

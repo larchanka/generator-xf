@@ -6,6 +6,7 @@ var util = require('util'),
     fs = require('fs'),
     exec = require('child_process').exec,
     XF = require('./xf.js'),
+    fse = require('fs-extra'),
     bowerhook = require('./bowerhook.js');
 
 

@@ -1,10 +1,10 @@
-
 var util = require('util'),
-path = require('path'),
-yeoman = require('yeoman-generator'),
-fs = require('fs'),
-exec = require('child_process').exec,
-XF = require('../app/xf.js');
+    path = require('path'),
+    yeoman = require('yeoman-generator'),
+    fs = require('fs'),
+    fse = require('fs-extra'),
+    exec = require('child_process').exec,
+    XF = require('../app/xf.js');
 
 var ApplicationGenerator = module.exports = function ApplicationGenerator(args, options, config) {
 
@@ -39,8 +39,8 @@ ApplicationGenerator.prototype.process = function update() {
     this.today += ':' + today.getSeconds();
     this.copy('../../app/templates/_package.json', 'package.json');
     this.copy('../../app/templates/_bower.json', 'bower.json');
-    
-    var doProd = function (_self) {
+
+    var doProd = function(_self) {
         _self.mkdir('prod');
         _self.mkdir('prod/images');
         _self.mkdir('prod/tmpl');
@@ -48,16 +48,16 @@ ApplicationGenerator.prototype.process = function update() {
         _self.mkdir('prod/styles');
         _self.mkdir('prod/styles/fonts');
         _self.template('../../app/templates/application/_cache.manifest', 'cache.manifest');
-        
-        fse.copySync('./styles/fonts/','./prod/styles/fonts/', function () {});
-        fse.copySync('./images/','./prod/images/', function () {});
-        fse.copySync('./tmpl/','./prod/tmpl/', function () {});
-        fse.copySync('./js/components/','./prod/js/components/', function () {});
-        fse.copySync('./js/xf.min.js','./prod/js/xf.min.js', function () {});
+
+        fse.copySync('./styles/fonts/', './prod/styles/fonts/', function() {});
+        fse.copySync('./images/', './prod/images/', function() {});
+        fse.copySync('./tmpl/', './prod/tmpl/', function() {});
+        fse.copySync('./js/components/', './prod/js/components/', function() {});
+        fse.copySync('./js/xf.min.js', './prod/js/xf.min.js', function() {});
 
         exec('grunt appbuild', {
             maxBuffer: 10000 * 1024
-        }, function (rmmsg) {
+        }, function(rmmsg) {
 
             if (rmmsg === null) {
                 console.log('Application build finished.')
@@ -71,7 +71,7 @@ ApplicationGenerator.prototype.process = function update() {
 
         console.log('\nCreating templates for "' + this.appName + '"');
         var _self = this;
-            
+
         this.template('../../app/templates/application/_index.html', 'index.html');
         this.copy('../../app/templates/application/_images/thumbs.jpg', 'images/thumbs.jpg');
         this.copy('../../app/templates/application/_js/app.js', 'js/app.js');
@@ -81,16 +81,16 @@ ApplicationGenerator.prototype.process = function update() {
         this.copy('../../app/templates/application/_tmpl/mobile/home.tmpl', 'tmpl/mobile/home.tmpl');
 
     } else if (this.event === 'build') {
-        
+
         var _self = this;
 
         console.log('\nBuilding your application.');
-        
-        fs.exists('./prod', function (exists) {
+
+        fs.exists('./prod', function(exists) {
             if (exists) {
                 exec('rm -r ./prod', {
                     maxBuffer: 10000 * 1024
-                }, function (rmmsg) {
+                }, function(rmmsg) {
 
                     if (rmmsg === null) {
                         doProd(_self);
@@ -102,8 +102,8 @@ ApplicationGenerator.prototype.process = function update() {
                 doProd(_self);
             }
         });
-        
-        
+
+
 
     } else {
 

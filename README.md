@@ -1,6 +1,8 @@
 
 # [XFramework](https://github.com/epam/xframework) Generator
 
+![](http://img.shields.io/npm/dm/generator-xf.svg) ![](http://img.shields.io/npm/v/generator-xf.svg)
+
 ![https://travis-ci.org/larchanka/generator-xf](https://api.travis-ci.org/larchanka/generator-xf.png)
 
 ## Getting started

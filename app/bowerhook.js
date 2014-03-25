@@ -10,26 +10,26 @@ var util = require('util'),
 
 
 var BH = module.exports = {
-    modules : '',
-    dirs : [
-            'js/lib/xframework',
-            'js/lib/xframework/js',
-            'js/lib/jquery',
-            'js/lib/backbone',
-            'js/lib/underscore'
-        ],
+    modules: '',
+    dirs: [
+        'js/lib/xframework',
+        'js/lib/xframework/js',
+        'js/lib/jquery',
+        'js/lib/backbone',
+        'js/lib/underscore'
+    ],
 
-    checkDirs : function(callback) {
+    checkDirs: function(callback) {
         var _global = this;
 
-        var totalDirs  = this.dirs.length,
-        uploadedDirs = 0;
+        var totalDirs = this.dirs.length,
+            uploadedDirs = 0;
 
-        var checkXframework = setInterval(function () {
+        var checkXframework = setInterval(function() {
 
-            _global.dirs.map(function (dir) {
+            _global.dirs.map(function(dir) {
 
-                fs.exists(dir, function (exists) {
+                fs.exists(dir, function(exists) {
                     uploadedDirs = (exists) ? uploadedDirs + 1 : uploadedDirs;
                 });
             });

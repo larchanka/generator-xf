@@ -1,10 +1,6 @@
 
 # [XFramework](https://github.com/epam/xframework) Generator
 
-![](http://img.shields.io/npm/dm/generator-xf.svg) ![](http://img.shields.io/npm/v/generator-xf.svg)
-
-![https://travis-ci.org/larchanka/generator-xf](https://api.travis-ci.org/larchanka/generator-xf.png)
-
 ## Getting started
 - Make sure you have [yeoman](https://github.com/yeoman/yo) installed:
     `npm install -g yo`
@@ -51,6 +47,11 @@ Allows you to create simple model. Can use parameters:
 ## License
 [MIT License](http://en.wikipedia.org/wiki/MIT_License)
 
+![](http://img.shields.io/npm/dm/generator-xf.svg) 
+
+![](http://img.shields.io/npm/v/generator-xf.svg)
+
+![https://travis-ci.org/larchanka/generator-xf](https://api.travis-ci.org/larchanka/generator-xf.png)
 
 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/larchanka/generator-xf/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
 
